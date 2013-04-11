@@ -9,6 +9,8 @@ CREATE OR REPLACE FUNCTION _overlay_pt_decide_direction(
 ) AS $body$
 #variable_conflict use_variable
 DECLARE
+  w1 geometry;
+  w2 geometry;
 BEGIN
   if mode=0 then
     direction='';
@@ -22,6 +24,21 @@ BEGIN
     end if;
     valid=true;
   elsif mode=2 then
+    w1=ST_Line_Interpolate_Point(way_curr, 0);
+    w2=ST_Line_Interpolate_Point(way_curr, 1);
+
+    if    way_prev is not null and ST_Intersects(w1, way_prev) then
+      direction='F';
+    elsif way_prev is not null and ST_Intersects(w2, way_prev) then
+      direction='B';
+    elsif way_next is not null and ST_Intersects(w2, way_next) then
+      direction='F';
+    elsif way_next is not null and ST_Intersects(w1, way_next) then
+      direction='B';
+    else
+      direction='';
+    end if;
+    valid=true; -- should return false for platforms, etc.
     -- TODO
   end if;
 END;

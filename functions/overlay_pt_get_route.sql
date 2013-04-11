@@ -44,6 +44,14 @@ BEGIN
 END;
 $body$ language plpgsql;
 
+create type overlay_pt_route as (
+  id        text,
+  tags      hstore,
+  way       geometry,
+  member_ids        text[],
+  member_roles      text[],
+  member_directions text[]
+);
 -- for stops return:
 -- direction|way_id|point on way|distance from way
 -- e.g. F|W26576395|0101000020E6100000DA50DBFFF7403040A7DE0612061B4840|4.88234030285617e-05
@@ -51,16 +59,14 @@ $body$ language plpgsql;
 CREATE OR REPLACE FUNCTION overlay_pt_get_route(
   IN bbox       geometry,
   IN rel_id     text,
-  OUT id        text,
-  OUT tags      hstore,
-  OUT way       geometry,
-  OUT member_ids        text[],
-  OUT member_roles      text[],
-  OUT member_directions text[]
-) AS $body$
+  IN options    hstore default ''::hstore
+)
+RETURNS SETOF overlay_pt_route
+AS $body$
 #variable_conflict use_variable
 DECLARE
   rel           osm_rel%rowtype;
+  ret           overlay_pt_route;
   r             record;
   i             int;
   i_curr        int;
@@ -82,26 +88,26 @@ BEGIN
   rel:=osm_rel(bbox, 'id='||quote_nullable(rel_id));
 
   -- initialize return values
-  id=rel.id;
-  tags:=rel.tags;
-  way:=rel.way;
-  member_ids=rel.member_ids;
-  member_roles=rel.member_roles;
-  member_directions=array_fill(''::text, Array[array_upper(rel.member_ids, 1)]);
+  ret.id=rel.id;
+  ret.tags:=rel.tags;
+  ret.way:=rel.way;
+  ret.member_ids=rel.member_ids;
+  ret.member_roles=rel.member_roles;
+  ret.member_directions=array_fill(''::text, Array[array_upper(rel.member_ids, 1)]);
   way_list=array_fill(null::geometry, Array[array_upper(rel.member_ids, 1)]);
 
   -- check mode
-  if tags?'from' or tags?'to' then
+  if ret.tags?'from' or ret.tags?'to' then
     mode=2;
-    tags=tags || '#overlay_pt_mode=>oxomoa'::hstore;
+    ret.tags=ret.tags || '#overlay_pt_mode=>oxomoa'::hstore;
   else
     mode=1;
-    tags=tags || '#overlay_pt_mode=>public_transport'::hstore;
+    ret.tags=ret.tags || '#overlay_pt_mode=>public_transport'::hstore;
   end if;
 
   -- assess route
-  length:=ST_Length(Geography(way));
-  tags=tags||('#overlay_pt_importance=>'||(CASE
+  length:=ST_Length(Geography(ret.way));
+  ret.tags=ret.tags||('#overlay_pt_importance=>'||(CASE
     WHEN length<=2500 THEN 'local'
     WHEN length<=10000 THEN 'suburban'
     WHEN length<=25000 THEN 'urban'
@@ -128,7 +134,7 @@ BEGIN
             rel.member_roles[i],
             mode
           );
-        member_directions[i]=r.direction;
+        ret.member_directions[i]=r.direction;
 
         if(r.valid) then
           way_prev=way_curr;
@@ -142,7 +148,7 @@ BEGIN
             rel.member_roles[i],
             mode
           );
-        member_directions[i]=r.direction;
+        ret.member_directions[i]=r.direction;
 
         if(r.valid) then
           has_prev=true;
@@ -167,7 +173,7 @@ BEGIN
         rel.member_roles[i_curr],
         mode
       );
-    member_directions[i_curr]=r.direction;
+    ret.member_directions[i_curr]=r.direction;
   elsif has_curr then
     r=_overlay_pt_decide_direction(
         way_curr.way,
@@ -176,7 +182,7 @@ BEGIN
         rel.member_roles[i_curr],
         mode
       );
-    member_directions[i_curr]=r.direction;
+    ret.member_directions[i_curr]=r.direction;
   end if;
 
   -- no iterate again for all stops to get their direction
@@ -188,12 +194,13 @@ BEGIN
     loop
 
       select  ways.member_direction, ways.member_id, ST_Line_Interpolate_Point(ways.way, ST_Line_Locate_Point(ways.way, way_curr.way)) poi, ST_Distance(ways.way, way_curr.way) distance into r from
-        (select unnest(member_ids) member_id, unnest(way_list) way, unnest(member_roles) member_role, unnest(member_directions) member_direction) ways
+        (select unnest(ret.member_ids) member_id, unnest(way_list) way, unnest(ret.member_roles) member_role, unnest(ret.member_directions) member_direction) ways
       where member_direction!='' order by distance asc limit 1;
-      member_directions[i]=r.member_direction||'|'||r.member_id||'|'||cast(r.poi as text)||'|'||r.distance;
+      ret.member_directions[i]=r.member_direction||'|'||r.member_id||'|'||cast(r.poi as text)||'|'||r.distance;
     end loop;
   end loop;
 
+  return next ret;
   return;
 END;
 $body$ language plpgsql;

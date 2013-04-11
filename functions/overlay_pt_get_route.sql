@@ -72,6 +72,7 @@ DECLARE
   way_list      geometry[];
   has_curr      bool:=false;
   length        float:=0;
+  importance    text;
   mode          int;
     -- 0.. unknown
     -- 1.. old PT scheme
@@ -97,6 +98,17 @@ BEGIN
     mode=1;
     tags=tags || '#overlay_pt_mode=>public_transport'::hstore;
   end if;
+
+  -- assess route
+  length:=ST_Length(Geography(way));
+  tags=tags||('#overlay_pt_importance=>'||(CASE
+    WHEN length<=2500 THEN 'local'
+    WHEN length<=10000 THEN 'suburban'
+    WHEN length<=25000 THEN 'urban'
+    WHEN length<=100000 THEN 'regional'
+    WHEN length<=250000 THEN 'national'
+    ELSE 'international'
+    END))::hstore;
 
   -- iterate over all ways
   i:=0; -- the for always acquires the next way, i points to current

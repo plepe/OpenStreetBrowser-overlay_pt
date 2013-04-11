@@ -59,6 +59,7 @@ DECLARE
   rel           osm_rel%rowtype;
   r             record;
   i             int;
+  i_curr        int;
   member_id     text;
   way_prev      record;
   has_prev      bool:=false;
@@ -93,10 +94,12 @@ BEGIN
 
   -- iterate over all ways
   i:=0; -- the for always acquires the next way, i points to current
+  i_curr:=0;
   foreach member_id in array rel.member_ids loop
     for way_next in -- returns only one row!
       select * from osm_linepoly(rel.way, 'id='||quote_nullable(member_id))
     loop
+      i_curr=i+1;
       -- call _overlay_pt_decide_direction always for the previous way
       if has_prev then
         r=_overlay_pt_decide_direction(
@@ -142,19 +145,19 @@ BEGIN
         way_curr.way,
         way_prev.way,
         null, 
-        rel.member_roles[i],
+        rel.member_roles[i_curr],
         mode
       );
-    member_directions[i]=r.direction;
+    member_directions[i_curr]=r.direction;
   elsif has_curr then
     r=_overlay_pt_decide_direction(
         way_curr.way,
         null,
         null,
-        rel.member_roles[i],
+        rel.member_roles[i_curr],
         mode
       );
-    member_directions[i]=r.direction;
+    member_directions[i_curr]=r.direction;
   end if;
 
   return;

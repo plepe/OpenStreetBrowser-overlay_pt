@@ -44,6 +44,10 @@ BEGIN
 END;
 $body$ language plpgsql;
 
+-- for stops return:
+-- direction|way_id|point on way|distance from way
+-- e.g. F|W26576395|0101000020E6100000DA50DBFFF7403040A7DE0612061B4840|4.88234030285617e-05
+-- 'point on way' is the closest point on the way to the stop
 CREATE OR REPLACE FUNCTION overlay_pt_get_route(
   IN bbox       geometry,
   IN rel_id     text,
@@ -65,7 +69,8 @@ DECLARE
   has_prev      bool:=false;
   way_next      record;
   way_curr      record;
-  has_curr       bool:=false;
+  way_list      geometry[];
+  has_curr      bool:=false;
   length        float:=0;
   mode          int;
     -- 0.. unknown
@@ -82,6 +87,7 @@ BEGIN
   member_ids=rel.member_ids;
   member_roles=rel.member_roles;
   member_directions=array_fill(''::text, Array[array_upper(rel.member_ids, 1)]);
+  way_list=array_fill(null::geometry, Array[array_upper(rel.member_ids, 1)]);
 
   -- check mode
   if tags?'from' or tags?'to' then
@@ -100,6 +106,7 @@ BEGIN
       select * from osm_linepoly(rel.way, 'id='||quote_nullable(member_id))
     loop
       i_curr=i+1;
+      way_list[i+1]=way_next.way;
       -- call _overlay_pt_decide_direction always for the previous way
       if has_prev then
         r=_overlay_pt_decide_direction(
@@ -159,6 +166,21 @@ BEGIN
       );
     member_directions[i_curr]=r.direction;
   end if;
+
+  -- no iterate again for all stops to get their direction
+  i:=0;
+  foreach member_id in array rel.member_ids loop
+    i=i+1;
+    for way_curr in -- returns only one row!
+      select * from osm_point(rel.way, 'id='||quote_nullable(member_id))
+    loop
+
+      select  ways.member_direction, ways.member_id, ST_Line_Interpolate_Point(ways.way, ST_Line_Locate_Point(ways.way, way_curr.way)) poi, ST_Distance(ways.way, way_curr.way) distance into r from
+        (select unnest(member_ids) member_id, unnest(way_list) way, unnest(member_roles) member_role, unnest(member_directions) member_direction) ways
+      where member_direction!='' order by distance asc limit 1;
+      member_directions[i]=r.member_direction||'|'||r.member_id||'|'||cast(r.poi as text)||'|'||r.distance;
+    end loop;
+  end loop;
 
   return;
 END;

@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION _overlay_pt_decide_direction(
-  IN way        geometry,
+  IN way_curr   geometry,
   IN way_prev   geometry,
   IN way_next   geometry,
   IN role       text,
@@ -30,7 +30,11 @@ $body$ language plpgsql;
 CREATE OR REPLACE FUNCTION overlay_pt_get_route(
   IN bbox       geometry,
   IN rel_id     text,
+  OUT id        text,
   OUT tags      hstore,
+  OUT way       geometry,
+  OUT member_ids        text[],
+  OUT member_roles      text[],
   OUT member_directions text[]
 ) AS $body$
 #variable_conflict use_variable
@@ -42,19 +46,23 @@ DECLARE
   way_prev      record;
   has_prev      bool:=false;
   way_next      record;
-  way           record;
-  has_way       bool:=false;
+  way_curr      record;
+  has_curr       bool:=false;
   length        float:=0;
   mode          int;
     -- 0.. unknown
     -- 1.. old PT scheme
     -- 2.. OXOMOA PT scheme
 BEGIN
-  -- get full reltion
+  -- get full relation
   rel:=osm_rel(bbox, 'id='||quote_nullable(rel_id));
 
   -- initialize return values
+  id=rel.id;
   tags:=rel.tags;
+  way:=rel.way;
+  member_ids=rel.member_ids;
+  member_roles=rel.member_roles;
   member_directions=array_fill(''::text, Array[array_upper(rel.member_ids, 1)]);
 
   -- check mode
@@ -75,7 +83,7 @@ BEGIN
       -- call _overlay_pt_decide_direction always for the previous way
       if has_prev then
         r=_overlay_pt_decide_direction(
-            way.way,
+            way_curr.way,
             way_prev.way,
             way_next.way,
             rel.member_roles[i],
@@ -84,12 +92,12 @@ BEGIN
         member_directions[i]=r.direction;
 
         if(r.valid) then
-          way_prev=way;
-          way=way_next;
+          way_prev=way_curr;
+          way_curr=way_next;
         end if;
-      elsif has_way then
+      elsif has_curr then
         r=_overlay_pt_decide_direction(
-            way.way,
+            way_curr.way,
             null,
             way_next.way,
             rel.member_roles[i],
@@ -99,12 +107,12 @@ BEGIN
 
         if(r.valid) then
           has_prev=true;
-          way_prev=way;
-          way=way_next;
+          way_prev=way_curr;
+          way_curr=way_next;
         end if;
       else
-        has_way=true;
-        way=way_next;
+        has_curr=true;
+        way_curr=way_next;
       end if;
     end loop;
 
@@ -114,16 +122,16 @@ BEGIN
   -- also call _overlay_pt_decide_direction for the last member way
   if has_prev then
     r=_overlay_pt_decide_direction(
-        way.way,
+        way_curr.way,
         way_prev.way,
         null, 
         rel.member_roles[i],
         mode
       );
     member_directions[i]=r.direction;
-  elsif has_way then
+  elsif has_curr then
     r=_overlay_pt_decide_direction(
-        way.way,
+        way_curr.way,
         null,
         null,
         rel.member_roles[i],

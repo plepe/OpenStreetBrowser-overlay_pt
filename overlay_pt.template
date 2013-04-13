@@ -13,11 +13,12 @@
   <Parameter name="table">
     (select
       way,
-      overlay_pt_way_type(array_agg(relation_tags)) as type
+      overlay_pt_way_type(array_agg(relation_tags)) as type,
+      overlay_pt_direction(array_agg(direction)) as direction
     from
       overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
     group by
-      way, relation_tags
+      way
     ) as t
   </Parameter>
   <Parameter name="type">postgis</Parameter>
@@ -26,8 +27,18 @@
 
 <Style filter-mode="first" name="ways">
   <Rule template='route_types_way'>
-    <Filter>[type] = '%KEY%'</Filter>
-    <LineSymbolizer stroke="%VALUE:color%" stroke-width="4" />
+    <Filter>[type] = '%KEY%' and [direction] = 'F'</Filter>
+    <LineSymbolizer stroke="#%VALUE:color%" stroke-width="3" offset="-1.5" />
+    <LinePatternSymbolizer file="%TMP_DIR%/way_forward_%VALUE:color%.png" />
+  </Rule>
+  <Rule template='route_types_way'>
+    <Filter>[type] = '%KEY%' and [direction] = 'B'</Filter>
+    <LineSymbolizer stroke="#%VALUE:color%" stroke-width="3" offset="1.5" />
+    <LinePatternSymbolizer file="%TMP_DIR%/way_backward_%VALUE:color%.png" />
+  </Rule>
+  <Rule template='route_types_way'>
+    <Filter>[type] = '%KEY%' and [direction] = 'X'</Filter>
+    <LineSymbolizer stroke="#%VALUE:color%" stroke-width="5" />
   </Rule>
 </Style>
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">

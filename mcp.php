@@ -1,46 +1,48 @@
 <?
 $route_types_way=array(
   'train'       =>array(
-    'color'     =>"#000000",
+    'color'     =>"000000",
   ),
   'subway'       =>array(
-    'color'     =>"#0000AA",
+    'color'     =>"0000AA",
   ),
   'monorail'       =>array(
-    'color'     =>"#0000FF",
+    'color'     =>"0000FF",
   ),
   'lightrail'       =>array(
-    'color'     =>"#ff0000",
+    'color'     =>"ff0000",
   ),
   'tram/bus'       =>array(
-    'color'     =>"#ff3300",
+    'color'     =>"ff3300",
   ),
   'tram'       =>array(
-    'color'     =>"#ff0000",
+    'color'     =>"ff0000",
   ),
   'trolleybus'       =>array(
-    'color'     =>"#000000",
+    'color'     =>"000000",
   ),
   'bus'       =>array(
-    'color'     =>"#ff5500",
+    'color'     =>"ff5500",
   ),
   'ferry'       =>array(
-    'color'     =>"#00ffff",
+    'color'     =>"00ffff",
   ),
   'aerialway'       =>array(
-    'color'     =>"#aa00ff",
+    'color'     =>"aa00ff",
   ),
   'share_taxi'       =>array(
-    'color'     =>"#ffff00",
+    'color'     =>"ffff00",
   ),
 );
 
 function overlay_pt_replacement() {
   global $route_types_way;
+  global $tmp_dir;
 
   $ret=array();
 
   $ret['%ROUTE_TYPES_IN%']="('".implode("', '", array_keys($route_types_way))."')";
+  $ret['%TMP_DIR%']=$tmp_dir;
 
   return $ret;
 }
@@ -111,7 +113,7 @@ function overlay_pt_compile($path) {
       print "* $k\n";
       $rule=$rule_template->cloneNode(true);
 
-      $rule_repl=array();
+      $rule_repl=overlay_pt_replacement();
       $rule_repl["%KEY%"]=$k;
       foreach($values as $vk=>$vv)
         $rule_repl["%VALUE:{$vk}%"]=$vv;
@@ -121,6 +123,24 @@ function overlay_pt_compile($path) {
       $parent->appendChild($rule);
     }
   }
+
+  global $tmp_dir;
+  $d=opendir("{$path}/img/");
+  while($f=readdir($d)) {
+    if(preg_match("/^(.*)\.(svg)$/", $f, $m)) {
+      $file_name_base=$m[1];
+
+      $content=file_get_contents("{$path}/img/{$f}");
+      foreach($route_types_way as $k=>$v) {
+        $color=$v['color'];
+
+        file_put_contents("{$tmp_dir}/{$file_name_base}_{$color}.svg",
+          strtr($content, array("123456"=>$color)));
+        system("convert -background none {$tmp_dir}/{$file_name_base}_{$color}.svg {$tmp_dir}/{$file_name_base}_{$color}.png");
+      }
+    }
+  }
+  closedir($d);
 
   file_put_contents("{$path}/overlay_pt.mapnik", $dom->saveXML());
 

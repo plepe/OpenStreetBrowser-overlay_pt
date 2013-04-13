@@ -7,14 +7,17 @@
   <Parameter name="estimate_extent">false</Parameter>
   <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
   <Parameter name="geometry_field">way</Parameter>
-  <Parameter name="host">dora.openstreetbrowser.org</Parameter>
+  <Parameter name="host">marten.openstreetbrowser.org</Parameter>
   <Parameter name="password"></Parameter>
   <Parameter name="srid">4326</Parameter>
   <Parameter name="table">
     (select
-      way
+      way,
+      overlay_pt_way_type(array_agg(relation_tags)) as type
     from
-      osm_rel(!bbox!, $$tags @> 'type=>route'$$)
+      overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
+    group by
+      way, relation_tags
     ) as t
   </Parameter>
   <Parameter name="type">postgis</Parameter>
@@ -22,8 +25,9 @@
 </Datasource>
 
 <Style filter-mode="first" name="ways">
-  <Rule>
-<LineSymbolizer stroke="#ff0000" stroke-width="4" />
+  <Rule template='route_types_way'>
+    <Filter>[type] = '%KEY%'</Filter>
+    <LineSymbolizer stroke="%VALUE:color%" stroke-width="4" />
   </Rule>
 </Style>
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">

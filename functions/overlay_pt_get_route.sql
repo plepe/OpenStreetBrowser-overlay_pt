@@ -84,6 +84,8 @@ DECLARE
     -- 1.. old PT scheme
     -- 2.. OXOMOA PT scheme
 BEGIN
+  -- raise notice 'overlay_pt_get_route(%)', rel_id;
+
   -- get full relation
   rel:=osm_rel(bbox, 'id='||quote_nullable(rel_id));
 

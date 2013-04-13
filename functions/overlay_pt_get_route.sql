@@ -85,6 +85,11 @@ DECLARE
     -- 2.. OXOMOA PT scheme
 BEGIN
   -- raise notice 'overlay_pt_get_route(%)', rel_id;
+  ret:=cast(cache_search(rel_id, 'overlay_pt_get_route') as overlay_pt_route);
+  if ret is not null then
+    return next ret;
+    return;
+  end if;
 
   -- get full relation
   rel:=osm_rel(bbox, 'id='||quote_nullable(rel_id));
@@ -202,6 +207,7 @@ BEGIN
     end loop;
   end loop;
 
+  perform cache_insert(rel_id, 'overlay_pt_get_route', cast(ret as text), rel.member_ids);
   return next ret;
   return;
 END;

@@ -14,7 +14,8 @@
     (select
       way,
       overlay_pt_way_type(array_agg(relation_tags)) as type,
-      overlay_pt_direction(array_agg(direction)) as direction
+      overlay_pt_direction(array_agg(direction)) as direction,
+      (overlay_pt_refs(array_agg(direction), array_agg(relation_tags))).*
     from
       overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
     group by
@@ -41,8 +42,17 @@
     <LineSymbolizer stroke="#%VALUE:color%" stroke-width="5" />
   </Rule>
 </Style>
+<Style filter-mode="first" name="ways_refs">
+  <Rule template='route_types_way'>
+    <Filter>[type] = '%KEY%'</Filter>
+    <TextSymbolizer face-name="DejaVu Sans Book" fill="#%VALUE:color%" halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">[text_right]
+      <Placement upright="left_only">[text_left]</Placement>
+    </TextSymbolizer>
+  </Rule>
+</Style>
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">
   <Datasource base="ways" />
   <StyleName>ways</StyleName>
+  <StyleName>ways_refs</StyleName>
 </Layer>
 </Map>

@@ -106,6 +106,21 @@
   </Rule>
 </Style>
 
+<Style name="stops_text">
+<Rule>
+  <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" size="12" placement-type="list">[name]
+    <Placement dy=" -5">[name]</Placement>
+    <Placement dy="  5">[name]</Placement>
+    <Placement dy="-10">[name]</Placement>
+    <Placement dy=" 10">[name]</Placement>
+    <Placement dy="-15">[name]</Placement>
+    <Placement dy=" 15">[name]</Placement>
+    <Placement dy="-20">[name]</Placement>
+    <Placement dy=" 20">[name]</Placement>
+  </TextSymbolizer>
+</Rule>
+</Style>
+
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">
   <Datasource>
     <Parameter name="dbname">osm</Parameter>
@@ -162,6 +177,38 @@
     <Parameter name="user">skunk_greg</Parameter>
   </Datasource>
   <StyleName>stops</StyleName>
+</Layer>
+
+<Layer name="stops_text" srs="+proj=latlong +datum=WGS84 +over">
+  <Datasource>
+    <Parameter name="dbname">osm</Parameter>
+    <Parameter name="estimate_extent">false</Parameter>
+    <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="host">marten.openstreetbrowser.org</Parameter>
+    <Parameter name="password"></Parameter>
+    <Parameter name="srid">4326</Parameter>
+    <Parameter name="table">
+      (select
+        tags->'name' as name,
+        way
+      from
+        osm_point(!bbox!, $$(
+          tags @> 'highway=>bus_stop' or
+          tags @> 'railway=>tram_stop' or
+          tags @> 'railway=>station' or
+          tags @> 'railway=>halt' or
+          tags @> 'amenity=>bus_station' or
+          tags @> 'amenity=>ferry_terminal' or
+          tags @> 'aeroway=>aerodrome' or
+          tags @> 'aerialway=>station'
+        )$$)
+      ) as t
+    </Parameter>
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="user">skunk_greg</Parameter>
+  </Datasource>
+  <StyleName>stops_text</StyleName>
 </Layer>
 
 <Layer name="ways_refs" srs="+proj=latlong +datum=WGS84 +over">

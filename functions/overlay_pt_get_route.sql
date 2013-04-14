@@ -79,6 +79,14 @@ DECLARE
   has_curr      bool:=false;
   length        float:=0;
   importance    text;
+  angle         float;
+  angle_p       float;
+  angle_n       float;
+  line_900913   geometry;
+  poi_900913    geometry;
+  pos_900913    float;
+  pos_p_900913  float;
+  pos_n_900913  float;
   mode          int;
     -- 0.. unknown
     -- 1.. old PT scheme
@@ -128,7 +136,7 @@ BEGIN
   i_curr:=0;
   foreach member_id in array rel.member_ids loop
     for way_next in -- returns only one row!
-      select * from osm_linepoly(rel.way, 'id='||quote_nullable(member_id))
+      select * from osm_line(rel.way, 'id='||quote_nullable(member_id))
     loop
       i_curr=i+1;
       way_list[i+1]=way_next.way;
@@ -200,10 +208,40 @@ BEGIN
       select * from osm_point(rel.way, 'id='||quote_nullable(member_id))
     loop
 
-      select  ways.member_direction, ways.member_id, ST_Line_Interpolate_Point(ways.way, ST_Line_Locate_Point(ways.way, way_curr.way)) poi, ST_Distance(ways.way, way_curr.way) distance into r from
+      select  ways.member_direction, ways.member_id, ST_Line_Interpolate_Point(ways.way, ST_Line_Locate_Point(ways.way, way_curr.way)) poi, ST_Distance(ways.way, way_curr.way) distance, ways.way into r from
         (select unnest(ret.member_ids) member_id, unnest(way_list) way, unnest(ret.member_roles) member_role, unnest(ret.member_directions) member_direction) ways
       where member_direction!='' order by distance asc limit 1;
-      ret.member_directions[i]=r.member_direction||'|'||r.member_id||'|'||cast(r.poi as text)||'|'||r.distance;
+
+      -- find angle of stop
+      line_900913=ST_Transform(r.way, 900913);
+      poi_900913=ST_Transform(r.poi, 900913);
+      pos_900913=ST_Line_Locate_Point(line_900913, poi_900913);
+      poi_900913=ST_Line_Interpolate_Point(line_900913, pos_900913);
+      length:=ST_Length(line_900913);
+      pos_p_900913:=pos_900913-0.001/length;
+
+      angle_p:=null;
+      if pos_p_900913>=0 then
+        angle_p:=ST_Azimuth(line_interpolate_point(line_900913, pos_p_900913), poi_900913);
+      end if;
+
+      angle_n:=null;
+      pos_n_900913:=pos_900913+0.001/length;
+      if pos_n_900913<=1 then
+        angle_n:=ST_Azimuth(poi_900913, line_interpolate_point(line_900913, pos_n_900913));
+      end if;
+
+      if angle_p is not null and angle_n is not null then
+        angle=angle_p+(angle_n-angle_p)/2;
+      elsif angle_p is not null then
+        angle=angle_p;
+      elsif angle_n is not null then
+        angle=angle_n;
+      else
+        angle=0;
+      end if;
+
+      ret.member_directions[i]=r.member_direction||'|'||r.member_id||'|'||cast(r.poi as text)||'|'||r.distance||'|'||angle;
     end loop;
   end loop;
 

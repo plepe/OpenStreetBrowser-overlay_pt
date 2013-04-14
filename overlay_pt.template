@@ -94,15 +94,15 @@
 <Style filter-mode="first" name="stops">
   <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'F'</Filter>
-    <PointSymbolizer file="%TMP_DIR%/stop_both_%VALUE:color%.png" />
+    <PointSymbolizer allow-overlap="true" transform="rotate([angle])" file="%TMP_DIR%/stop_forward_%VALUE:color%.png" />
   </Rule>
   <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'B'</Filter>
-    <PointSymbolizer file="%TMP_DIR%/stop_both_%VALUE:color%.png" />
+    <PointSymbolizer allow-overlap="true" transform="rotate([angle])" file="%TMP_DIR%/stop_backward_%VALUE:color%.png" />
   </Rule>
   <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'X'</Filter>
-    <PointSymbolizer file="%TMP_DIR%/stop_both_%VALUE:color%.png" />
+    <PointSymbolizer allow-overlap="true" file="%TMP_DIR%/stop_both_%VALUE:color%.png" />
   </Rule>
 </Style>
 
@@ -145,15 +145,17 @@
       (select
         overlay_pt_way_type(array_agg(relation_tags)) as type,
         overlay_pt_direction(array_agg(direction)) as direction,
+        angle,
         way
       from (select
         (string_to_array(direction, '|'))[1] as direction,
         (string_to_array(direction, '|'))[3] as way,
+        cast((string_to_array(direction, '|'))[5] as float)*180/PI() as angle,
         relation_tags
       from
         overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
       ) as t
-        group by way
+        group by way, angle
       ) as t1
     </Parameter>
     <Parameter name="type">postgis</Parameter>

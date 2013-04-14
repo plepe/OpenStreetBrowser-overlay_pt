@@ -2,30 +2,6 @@
 <!DOCTYPE Map>
 
 <Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-<Datasource name="ways">
-  <Parameter name="dbname">osm</Parameter>
-  <Parameter name="estimate_extent">false</Parameter>
-  <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-  <Parameter name="geometry_field">way</Parameter>
-  <Parameter name="host">marten.openstreetbrowser.org</Parameter>
-  <Parameter name="password"></Parameter>
-  <Parameter name="srid">4326</Parameter>
-  <Parameter name="table">
-    (select
-      way,
-      overlay_pt_way_type(array_agg(relation_tags)) as type,
-      overlay_pt_direction(array_agg(direction)) as direction,
-      (overlay_pt_refs(array_agg(direction), array_agg(relation_tags))).*
-    from
-      overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
-    group by
-      way
-    ) as t
-  </Parameter>
-  <Parameter name="type">postgis</Parameter>
-  <Parameter name="user">skunk_greg</Parameter>
-</Datasource>
-
 <Style filter-mode="first" name="ways">
   <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'F'</Filter>
@@ -114,9 +90,57 @@
     </TextSymbolizer>
   </Rule>
 </Style>
+
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">
-  <Datasource base="ways" />
+  <Datasource>
+    <Parameter name="dbname">osm</Parameter>
+    <Parameter name="estimate_extent">false</Parameter>
+    <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="host">marten.openstreetbrowser.org</Parameter>
+    <Parameter name="password"></Parameter>
+    <Parameter name="srid">4326</Parameter>
+    <Parameter name="table">
+      (select
+        way,
+        overlay_pt_way_type(array_agg(relation_tags)) as type,
+        overlay_pt_direction(array_agg(direction)) as direction
+      from
+        overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
+      group by
+        way
+      ) as t
+    </Parameter>
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="user">skunk_greg</Parameter>
+  </Datasource>
   <StyleName>ways</StyleName>
+</Layer>
+
+<Layer name="ways_refs" srs="+proj=latlong +datum=WGS84 +over">
+  <Datasource>
+    <Parameter name="dbname">osm</Parameter>
+    <Parameter name="estimate_extent">false</Parameter>
+    <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="host">marten.openstreetbrowser.org</Parameter>
+    <Parameter name="password"></Parameter>
+    <Parameter name="srid">4326</Parameter>
+    <Parameter name="table">
+      (select
+        way,
+        overlay_pt_way_type(array_agg(relation_tags)) as type,
+        overlay_pt_direction(array_agg(direction)) as direction,
+        (overlay_pt_refs(array_agg(direction), array_agg(relation_tags))).*
+      from
+        overlay_pt_get_members(!bbox!, $$tags @> 'type=>route' and tags->'route' in %ROUTE_TYPES_IN%$$)
+      group by
+        way
+      ) as t
+    </Parameter>
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="user">skunk_greg</Parameter>
+  </Datasource>
   <StyleName>ways_refs</StyleName>
 </Layer>
 </Map>

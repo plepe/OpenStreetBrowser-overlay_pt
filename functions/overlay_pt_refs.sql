@@ -31,6 +31,7 @@ DECLARE
   d int;
   r record;
   has_dir bool[];
+  needs_comma int;
 BEGIN
   ref_parts=array_fill(''::text, Array[9]);
   has_dir=array_fill(false, Array[9]);
@@ -63,6 +64,19 @@ BEGIN
   if has_dir[1] then ret.ref_has_dir=ret.ref_has_dir||'X'; end if;
   if has_dir[2] then ret.ref_has_dir=ret.ref_has_dir||'F'; end if;
   if has_dir[3] then ret.ref_has_dir=ret.ref_has_dir||'B'; end if;
+
+  for d in 1..3 loop
+    needs_comma=null;
+
+    for i in 1..3 loop
+      if ref_parts[(i-1)*3+d]!='' then
+        if needs_comma is not null then
+          ref_parts[(needs_comma-1)*3+d]=ref_parts[(needs_comma-1)*3+d]||', ';
+        end if;
+        needs_comma=i;
+      end if;
+    end loop;
+  end loop;
 
   ret.ref1_type        =ref_types[1];
   ret.ref1_color       =(select '#'||(tags->'color') from overlay_pt_route_types where id=ref_types[1]);

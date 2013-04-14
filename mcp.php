@@ -1,5 +1,5 @@
 <?
-$route_types_way=array(
+$overlay_pt_route_types=array(
   'train'       =>array(
     'color'     =>"000000",
   ),
@@ -36,12 +36,12 @@ $route_types_way=array(
 );
 
 function overlay_pt_replacement() {
-  global $route_types_way;
+  global $overlay_pt_route_types;
   global $tmp_dir;
 
   $ret=array();
 
-  $ret['%ROUTE_TYPES_IN%']="('".implode("', '", array_keys($route_types_way))."')";
+  $ret['%ROUTE_TYPES_IN%']="('".implode("', '", array_keys($overlay_pt_route_types))."')";
   $ret['%TMP_DIR%']=$tmp_dir;
 
   return $ret;
@@ -131,7 +131,7 @@ function overlay_pt_compile($path) {
       $file_name_base=$m[1];
 
       $content=file_get_contents("{$path}/img/{$f}");
-      foreach($route_types_way as $k=>$v) {
+      foreach($overlay_pt_route_types as $k=>$v) {
         $color=$v['color'];
 
         file_put_contents("{$tmp_dir}/{$file_name_base}_{$color}.svg",
@@ -149,7 +149,10 @@ function overlay_pt_compile($path) {
 
 function overlay_pt_init($renderd) {
   $compile=false;
+  global $db_central;
+  global $overlay_pt_route_types;
 
+  // check overlay_pt file
   $prefix=modulekit_file("overlay_pt", "overlay_pt", true);
   $path=modulekit_file("overlay_pt", "", true);
 
@@ -159,6 +162,14 @@ function overlay_pt_init($renderd) {
     $compile=true;
 
   if($compile) {
+    // re-populate overlay_pt_route_types table
+    sql_query("delete from overlay_pt_route_types", $db_central);
+    foreach($overlay_pt_route_types as $id=>$v) {
+      $h=array_to_hstore($v);
+      sql_query("insert into overlay_pt_route_types values ('{$id}', {$h})", $db_central);
+    }
+
+    // re-compile stylesheet
     print "Recompiling\n";
     overlay_pt_compile($path);
   }

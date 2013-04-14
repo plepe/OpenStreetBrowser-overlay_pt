@@ -27,23 +27,23 @@
 </Datasource>
 
 <Style filter-mode="first" name="ways">
-  <Rule template='route_types_way'>
+  <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'F'</Filter>
     <LineSymbolizer stroke="#%VALUE:color%" stroke-width="3" offset="-1.5" />
     <LinePatternSymbolizer file="%TMP_DIR%/way_forward_%VALUE:color%.png" />
   </Rule>
-  <Rule template='route_types_way'>
+  <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'B'</Filter>
     <LineSymbolizer stroke="#%VALUE:color%" stroke-width="3" offset="1.5" />
     <LinePatternSymbolizer file="%TMP_DIR%/way_backward_%VALUE:color%.png" />
   </Rule>
-  <Rule template='route_types_way'>
+  <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%' and [direction] = 'X'</Filter>
     <LineSymbolizer stroke="#%VALUE:color%" stroke-width="5" />
   </Rule>
 </Style>
 <Style filter-mode="first" name="ways_refs">
-  <Rule template='route_types_way'>
+  <Rule template='overlay_pt_route_types'>
     <Filter>[type] = '%KEY%'</Filter>
     <TextSymbolizer face-name="DejaVu Sans Book" fill="#%VALUE:color%" halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">[text_right]
       <Placement upright="left_only">[text_left]</Placement>

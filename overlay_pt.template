@@ -106,17 +106,61 @@
   </Rule>
 </Style>
 
-<Style name="stops_text">
+<Style name="stops_text" filter-mode="first">
 <Rule>
-  <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" size="12" placement-type="list">[name]
-    <Placement dy=" -5">[name]</Placement>
-    <Placement dy="  5">[name]</Placement>
-    <Placement dy="-10">[name]</Placement>
-    <Placement dy=" 10">[name]</Placement>
-    <Placement dy="-15">[name]</Placement>
-    <Placement dy=" 15">[name]</Placement>
-    <Placement dy="-20">[name]</Placement>
-    <Placement dy=" 20">[name]</Placement>
+  <TextSymbolizer face-name="DejaVu Sans Bold" fill='#000000' halo-fill="#ffffff" halo-radius="1" size="12" placement-type="list" vertical-alignment="bottom" horizontal-alignment="right" wrap-width="100" avoid-edges="true">[name]
+    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy=" -2" dx="  2" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" -2" dx=" -2" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="  2" dx="  2" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="  2" dx=" -2" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" -2" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy=" -4" dx="  4" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" -4" dx=" -4" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="  4" dx="  4" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="  4" dx=" -4" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" -4" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy=" -6" dx="  6" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" -6" dx=" -6" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="  6" dx="  6" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="  6" dx=" -6" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" -6" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy=" -8" dx="  8" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" -8" dx=" -8" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="  8" dx="  8" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="  8" dx=" -8" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" -8" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-10" dx=" 10" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-10" dx="-10" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 10" dx=" 10" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 10" dx="-10" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-10" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-12" dx=" 12" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-12" dx="-12" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 12" dx=" 12" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 12" dx="-12" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-12" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-14" dx=" 14" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-14" dx="-14" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 14" dx=" 14" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 14" dx="-14" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-14" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-16" dx=" 16" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-16" dx="-16" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 16" dx=" 16" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 16" dx="-16" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-16" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-18" dx=" 18" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-18" dx="-18" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 18" dx=" 18" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 18" dx="-18" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-18" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+    <Placement dy="-20" dx=" 20" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
+    <Placement dy="-20" dx="-20" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
+    <Placement dy=" 20" dx=" 20" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
+    <Placement dy=" 20" dx="-20" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
+    <Placement dy="-20" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
   </TextSymbolizer>
 </Rule>
 </Style>
@@ -190,8 +234,10 @@
     <Parameter name="srid">4326</Parameter>
     <Parameter name="table">
       (select
-        tags->'name' as name,
-        way
+        ST_Centroid(way) as way,
+        name
+      from (select
+        (overlay_pt_group_stops(id, tags, way)).*
       from
         osm_point(!bbox!, $$(
           tags @> 'highway=>bus_stop' or
@@ -204,6 +250,8 @@
           tags @> 'aerialway=>station'
         )$$)
       ) as t
+      group by group_id, name, way
+      ) as t2
     </Parameter>
     <Parameter name="type">postgis</Parameter>
     <Parameter name="user">skunk_greg</Parameter>

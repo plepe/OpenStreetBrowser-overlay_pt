@@ -165,6 +165,57 @@
 </Rule>
 </Style>
 
+<Style name="stops_enclosure1" filter-mode="first" opacity="0.3">
+  <Rule>
+    <PolygonSymbolizer fill="#a0a0a0" />
+  </Rule>
+</Style>
+<Style name="stops_enclosure2" filter-mode="first" opacity="0.9">
+  <Rule>
+    <LineSymbolizer stroke="#a0a0a0" stroke-width="3" />
+  </Rule>
+</Style>
+
+<Layer name="stops_enclosure" srs="+proj=latlong +datum=WGS84 +over">
+  <Datasource>
+    <Parameter name="dbname">osm</Parameter>
+    <Parameter name="estimate_extent">false</Parameter>
+    <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    <Parameter name="geometry_field">way</Parameter>
+    <Parameter name="host">marten.openstreetbrowser.org</Parameter>
+    <Parameter name="password"></Parameter>
+    <Parameter name="srid">4326</Parameter>
+    <Parameter name="table">
+      (select
+        ST_Transform(ST_ConvexHull(ST_Buffer(ST_Transform(way, 900913),
+          (!scale_denominator!/180) ^ 0.9
+        )), 4326) as way
+        -- ST_Area(ST_Transform(way, 900913))/!scale_denominator! as size
+        -- ST_Area(ST_Transform(way, 900913))/!scale_denominator! as name
+      from (select
+        (overlay_pt_group_stops(id, tags, way)).*
+      from
+        osm_point(!bbox!, $$(
+          tags @> 'highway=>bus_stop' or
+          tags @> 'railway=>tram_stop' or
+          tags @> 'railway=>station' or
+          tags @> 'railway=>halt' or
+          tags @> 'amenity=>bus_station' or
+          tags @> 'amenity=>ferry_terminal' or
+          tags @> 'aeroway=>aerodrome' or
+          tags @> 'aerialway=>station'
+        )$$)
+      ) as t
+      group by group_id, name, way
+      ) as t2
+    </Parameter>
+    <Parameter name="type">postgis</Parameter>
+    <Parameter name="user">skunk_greg</Parameter>
+  </Datasource>
+  <StyleName>stops_enclosure1</StyleName>
+  <StyleName>stops_enclosure2</StyleName>
+</Layer>
+
 <Layer name="ways" srs="+proj=latlong +datum=WGS84 +over">
   <Datasource>
     <Parameter name="dbname">osm</Parameter>

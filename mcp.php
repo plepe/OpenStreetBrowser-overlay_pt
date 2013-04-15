@@ -1,37 +1,51 @@
 <?
+// symbol are characters from the Unicode "Transport and Map Symbols" plane
+// we use the font 'Symbola Regular' (from http://users.teilar.gr/~g1951d/) to
+// display them
 $overlay_pt_route_types=array(
   'train'       =>array(
     'color'     =>"000000",
+    'symbol'    =>"🚆",
   ),
   'subway'       =>array(
     'color'     =>"0000AA",
+    'symbol'    =>"🚇",
   ),
   'monorail'       =>array(
     'color'     =>"0000FF",
+    'symbol'    =>"🚝",
   ),
   'lightrail'       =>array(
     'color'     =>"ff0000",
+    'symbol'    =>"🚈",
   ),
   'tram/bus'       =>array(
     'color'     =>"ff3300",
+    'symbol'    =>"🚋🚌",
   ),
   'tram'       =>array(
     'color'     =>"ff0000",
+    'symbol'    =>"🚋",
   ),
   'trolleybus'       =>array(
     'color'     =>"000000",
+    'symbol'    =>"🚎",
   ),
   'bus'       =>array(
     'color'     =>"ff5500",
+    'symbol'    =>"🚌",
   ),
   'ferry'       =>array(
     'color'     =>"00ffff",
+    'symbol'    =>"🚢",
   ),
   'aerialway'       =>array(
     'color'     =>"aa00ff",
+    'symbol'    =>"🚡",
   ),
   'share_taxi'       =>array(
     'color'     =>"ffff00",
+    'symbol'    =>"🚖",
   ),
 );
 

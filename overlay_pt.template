@@ -108,59 +108,59 @@
 
 <Style name="stops_text" filter-mode="first">
 <Rule>
-  <TextSymbolizer face-name="DejaVu Sans Bold" fill='#000000' halo-fill="#ffffff" halo-radius="1" size="12" placement-type="list" vertical-alignment="bottom" horizontal-alignment="right" wrap-width="100" avoid-edges="true">[name]
-    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy=" -2" dx="  2" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" -2" dx=" -2" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="  2" dx="  2" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="  2" dx=" -2" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" -2" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy=" -4" dx="  4" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" -4" dx=" -4" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="  4" dx="  4" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="  4" dx=" -4" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" -4" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy=" -6" dx="  6" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" -6" dx=" -6" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="  6" dx="  6" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="  6" dx=" -6" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" -6" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy=" -8" dx="  8" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" -8" dx=" -8" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="  8" dx="  8" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="  8" dx=" -8" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" -8" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-10" dx=" 10" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-10" dx="-10" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 10" dx=" 10" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 10" dx="-10" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-10" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-12" dx=" 12" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-12" dx="-12" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 12" dx=" 12" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 12" dx="-12" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-12" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-14" dx=" 14" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-14" dx="-14" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 14" dx=" 14" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 14" dx="-14" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-14" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-16" dx=" 16" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-16" dx="-16" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 16" dx=" 16" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 16" dx="-16" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-16" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-18" dx=" 18" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-18" dx="-18" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 18" dx=" 18" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 18" dx="-18" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-18" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
-    <Placement dy="-20" dx=" 20" vertical-alignment="bottom" horizontal-alignment="right">[name]</Placement>
-    <Placement dy="-20" dx="-20" vertical-alignment="bottom" horizontal-alignment="left">[name]</Placement>
-    <Placement dy=" 20" dx=" 20" vertical-alignment="top" horizontal-alignment="right">[name]</Placement>
-    <Placement dy=" 20" dx="-20" vertical-alignment="top" horizontal-alignment="left">[name]</Placement>
-    <Placement dy="-20" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]</Placement>
+  <TextSymbolizer face-name="DejaVu Sans Bold" fill='#000000' halo-fill="#ffffff" halo-radius="1" size="12" placement-type="list" vertical-alignment="bottom" horizontal-alignment="right" wrap-width="100" avoid-edges="true">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format>
+    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  0" dx="  0" vertical-alignment="bottom" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -2" dx="  2" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -2" dx=" -2" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  2" dx="  2" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  2" dx=" -2" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -2" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -4" dx="  4" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -4" dx=" -4" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  4" dx="  4" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  4" dx=" -4" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -4" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -6" dx="  6" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -6" dx=" -6" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  6" dx="  6" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  6" dx=" -6" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -6" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -8" dx="  8" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -8" dx=" -8" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  8" dx="  8" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="  8" dx=" -8" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" -8" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-10" dx=" 10" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-10" dx="-10" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 10" dx=" 10" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 10" dx="-10" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-10" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-12" dx=" 12" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-12" dx="-12" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 12" dx=" 12" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 12" dx="-12" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-12" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-14" dx=" 14" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-14" dx="-14" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 14" dx=" 14" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 14" dx="-14" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-14" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-16" dx=" 16" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-16" dx="-16" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 16" dx=" 16" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 16" dx="-16" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-16" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-18" dx=" 18" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-18" dx="-18" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 18" dx=" 18" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 18" dx="-18" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-18" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-20" dx=" 20" vertical-alignment="bottom" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-20" dx="-20" vertical-alignment="bottom" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 20" dx=" 20" vertical-alignment="top" horizontal-alignment="right">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy=" 20" dx="-20" vertical-alignment="top" horizontal-alignment="left">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
+    <Placement dy="-20" dx="  0" vertical-alignment="top" horizontal-alignment="middle">[name]<Format face-name="Symbola Regular">' '+[route_symbols]</Format></Placement>
   </TextSymbolizer>
 </Rule>
 </Style>
@@ -285,7 +285,11 @@
     <Parameter name="srid">4326</Parameter>
     <Parameter name="table">
       (select
+        *,
+        (select string_agg(symbol, '') from (select tags->'symbol' symbol from (select unnest(relation_tags)->'route' route) st1 join overlay_pt_route_types on route=id group by tags->'symbol') st2) as route_symbols
+      from (select
         ST_Centroid(way) as way,
+        relation_tags,
         name
       from (select
         (overlay_pt_group_stops(id, tags, way)).*
@@ -301,8 +305,9 @@
           tags @> 'aerialway=>station'
         )$$)
       ) as t
-      group by group_id, name, way
+      group by group_id, name, way, relation_tags
       ) as t2
+      ) as t3
     </Parameter>
     <Parameter name="type">postgis</Parameter>
     <Parameter name="user">skunk_greg</Parameter>

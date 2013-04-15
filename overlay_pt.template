@@ -21,7 +21,7 @@
 <Style filter-mode="first" name="ways_refs">
   <Rule>
     <Filter>[ref_has_dir] = 'XFB'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         <ExpressionFormat fill='[ref1_color]'>[ref1_both]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_both]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_both]</ExpressionFormat>
         " → "<ExpressionFormat fill='[ref1_color]'>[ref1_forward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_forward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_forward]</ExpressionFormat>
         " ← "<ExpressionFormat fill='[ref1_color]'>[ref1_backward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_backward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_backward]</ExpressionFormat>
@@ -34,7 +34,7 @@
   </Rule>
   <Rule>
     <Filter>[ref_has_dir] = 'XF'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         <ExpressionFormat fill='[ref1_color]'>[ref1_both]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_both]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_both]</ExpressionFormat>
         " → "<ExpressionFormat fill='[ref1_color]'>[ref1_forward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_forward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_forward]</ExpressionFormat>
       <Placement upright="left_only">
@@ -45,7 +45,7 @@
   </Rule>
   <Rule>
     <Filter>[ref_has_dir] = 'XB'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         <ExpressionFormat fill='[ref1_color]'>[ref1_both]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_both]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_both]</ExpressionFormat>
         " ← "<ExpressionFormat fill='[ref1_color]'>[ref1_backward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_backward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_backward]</ExpressionFormat>
       <Placement upright="left_only">
@@ -62,7 +62,7 @@
   </Rule>
   <Rule>
     <Filter>[ref_has_dir] = 'FB'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         " → "<ExpressionFormat fill='[ref1_color]'>[ref1_forward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_forward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_forward]</ExpressionFormat>
         " ← "<ExpressionFormat fill='[ref1_color]'>[ref1_backward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_backward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_backward]</ExpressionFormat>
       <Placement upright="left_only">
@@ -73,7 +73,7 @@
   </Rule>
   <Rule>
     <Filter>[ref_has_dir] = 'F'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         " → "<ExpressionFormat fill='[ref1_color]'>[ref1_forward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_forward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_forward]</ExpressionFormat>
       <Placement upright="left_only">
         " ← "<ExpressionFormat fill='[ref1_color]'>[ref1_forward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_forward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_forward]</ExpressionFormat>
@@ -82,7 +82,7 @@
   </Rule>
   <Rule>
     <Filter>[ref_has_dir] = 'B'</Filter>
-    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" placement-type="list">
+    <TextSymbolizer face-name="DejaVu Sans Book" fill='#000000' halo-fill="#ffffff" halo-radius="1" placement="line" size="12" upright="right_only" spacing="256" placement-type="list">
         " ← "<ExpressionFormat fill='[ref1_color]'>[ref1_backward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_backward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_backward]</ExpressionFormat>
       <Placement upright="left_only">
         " → "<ExpressionFormat fill='[ref1_color]'>[ref1_backward]</ExpressionFormat><ExpressionFormat fill='[ref2_color]'>[ref2_backward]</ExpressionFormat><ExpressionFormat fill='[ref3_color]'>[ref3_backward]</ExpressionFormat>

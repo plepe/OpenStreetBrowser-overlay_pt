@@ -80,16 +80,19 @@ BEGIN
 
   ret.ref1_type        =ref_types[1];
   ret.ref1_color       =(select '#'||(tags->'color') from overlay_pt_route_types where id=ref_types[1]);
+  if ret.ref1_color is null then ret.ref1_color='#000000'; end if;
   ret.ref1_both        =ref_parts[1];
   ret.ref1_forward     =ref_parts[2];
   ret.ref1_backward    =ref_parts[3];
   ret.ref2_type        =ref_types[2];
   ret.ref2_color       =(select '#'||(tags->'color') from overlay_pt_route_types where id=ref_types[2]);
+  if ret.ref2_color is null then ret.ref2_color='#000000'; end if;
   ret.ref2_both        =ref_parts[4];
   ret.ref2_forward     =ref_parts[5];
   ret.ref2_backward    =ref_parts[6];
   ret.ref3_type        =ref_types[3];
   ret.ref3_color       =(select '#'||(tags->'color') from overlay_pt_route_types where id=ref_types[3]);
+  if ret.ref3_color is null then ret.ref3_color='#000000'; end if;
   ret.ref3_both        =ref_parts[7];
   ret.ref3_forward     =ref_parts[8];
   ret.ref3_backward    =ref_parts[9];
